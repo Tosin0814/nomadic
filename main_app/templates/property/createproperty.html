@@ -1,36 +1,24 @@
 {% extends 'base.html' %}
 
-{% block title%}
-    {% if object %}
-        <h3>Edit Property</h3>
-    {% else %}
-        <h3>Add Property</h3>
-    {% endif %}
-{% endblock %}
 
 {% block content %}
-<div class="main-content">
-    <div class="p-5 border-light container justify-content-center">
-        <div class=" w-50 card row justify-content-center mx-auto">
-            <div class="col bg-light">
+<div class="card add__property">
+            <div class="">
                 {% if object %}
                 <h3 class="text-center mt-2">Edit <span class="">{{object.title}}</span></h3>
                 {% else %}
                 <h3 class="text-center mt-2">Add Property</h3>
                 {% endif %}
-                <br>
                 <form method="post" action="">
                     {% csrf_token %}
                     {{ form.as_p }}
                     {% if object %}
-                    <input type="submit" class="btn btn-primary" value="Submit">
+                    <input type="submit" class="btn btn-primary mt-3" value="Submit">
                     {% else %}
-                    <input type="submit" class="btn btn-primary" value="Create Listing">
+                    <input type="submit" class="btn btn-primary mt-3" value="Create Listing">
                     {% endif %}
                 </form>
             </div>
-        </div>
-    </div>
 </div>
 
 

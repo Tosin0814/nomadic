@@ -49,6 +49,28 @@ body {
     align-items: center;
   }
   
+ input {
+    border-bottom: 1px solid lightgrey;
+  }
+  
+
+  .add__property {
+    margin: auto;
+    width: 66vw;
+    padding: 2rem;
+  }
+
+  .add__property h3 {
+    margin-bottom: 1rem;
+  }
+
+  .add__property form {
+    padding: 1rem 5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  
   
 
 .index-content{
