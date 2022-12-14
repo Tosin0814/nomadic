@@ -127,7 +127,7 @@
                         </form>
                         {% else %}
                         <button disabled class="btn btn-sm btn-secondary reservation-{{availability.id}}">Reserved</button>
-                            {% if request.user.id in reservation_user %}
+                            {% if request.user.id == availability.reservation_set.first.user.id %}
                             <form id="delete-reservation-{{availability.id}}" action="{% url 'cancel_reservation' property.id availability.id %}" method="post">
                                 {% csrf_token %}
                                 <button class="btn btn-sm btn-danger delete-reservation-{{availability.id}}-btn" type="submit">Cancel Reservation</button>

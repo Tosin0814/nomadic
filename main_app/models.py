@@ -6,17 +6,6 @@ from datetime import datetime, date
 from django.contrib.auth.models import User
 
 
-# FEATURES = (
-#     ('W', 'WIFI'),
-#     ('TV', 'HDTV'),
-#     ('WF', 'Waterfront'),
-#     ('CAC', 'Central Air Conditioning'),
-#     ('BS', 'Bluetooth Sound System'),
-#     ('BG', 'Board Games'),
-#     ('CH', 'Central heating'),
-#     ('P', 'Pool'),
-# )
-
 RATINGS = (
     ('E', 'Excellent'),
     ('VG', 'Very Good'),
@@ -32,7 +21,6 @@ class ProfilePicture(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        # For obtaining the friendly value of a Field.choice
         return f"Photo created for {self.user.username}"
 
 
@@ -58,7 +46,6 @@ class Property(models.Model):
     date_listed = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        # Nice method for obtaining the friendly value of a Field.choice
         return f"{self.title} on {self.date_listed}"
 
     def get_absolute_url(self):
@@ -74,7 +61,6 @@ class Photo(models.Model):
     date_created = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        # For obtaining the friendly value of a Field.choice
         return f"Photo created for {self.property.title} on {self.date_created}"
 
     class Meta:
@@ -87,7 +73,6 @@ class Availability(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     
     def __str__(self):
-        # Nice method for obtaining the friendly value of a Field.choice
         return f"{self.from_date} to {self.till_date} for {self.property.title}"
 
     class Meta:
@@ -104,6 +89,7 @@ class Like(models.Model):
     def __str__(self):
         return  f"{self.user.username} likes {self.property.title}"
 
+
 class Review(models.Model):
     user_name = models.CharField(max_length=100)
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
@@ -115,11 +101,11 @@ class Review(models.Model):
     date = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
-        # Nice method for obtaining the friendly value of a Field.choice
         return f"By {self.user_name} on {self.date}"
 
     class Meta:
         ordering = ['-date']
+
 
 class Reservation(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)

@@ -14,8 +14,6 @@ from django.views.decorators.csrf import csrf_exempt
 S3_BASE_URL = 'https://s3-ca-central-1.amazonaws.com/'
 BUCKET = 'nomadic-leozhao'
 
-# def choose_signup(request):
-#   return render(request, 'registration/choose_signup.html')
 
 
 def signup(request):
@@ -36,15 +34,11 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-  
-
-# class ProfilePage(LoginRequiredMixin, DetailView):
-#   model = User
-#   template_name = 'user/profile.html'
 
 class ProfileView(LoginRequiredMixin, DetailView):
   model = User
   template_name = 'user/profile.html'
+
 
 class ProfileUpdate(LoginRequiredMixin, UpdateView):
   model = User
@@ -52,14 +46,17 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
   fields = ['email']
   success_url = '/'
 
+
 class ProfileDelete(LoginRequiredMixin, DeleteView):
   model = User
   template_name = 'user/confirm_delete.html'
   success_url = '/'
 
+
 class PropertyList(ListView):
   model = Property
   template_name = 'property/index.html'
+
 
 @login_required
 def property_detail(request, property_id):
@@ -82,6 +79,7 @@ def property_detail(request, property_id):
     'features_property_doesnt_have_id': features_property_doesnt_have_id
   })
 
+
 class PropertyCreate(LoginRequiredMixin, CreateView):
   model = Property
   fields = ['title', 'description', 'location', 'price']
@@ -90,25 +88,30 @@ class PropertyCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+
 class PropertyUpdate(LoginRequiredMixin, UpdateView):
   model = Property
   fields = ['title', 'description', 'location', 'price']
   template_name = 'property/createproperty.html'
+
 
 class PropertyDelete(LoginRequiredMixin, DeleteView):
   model = Property
   template_name = 'property/confirm_delete.html'
   success_url = '/'
 
+
 @login_required
 def associate_property_feature(request, property_id, property_feature_id):
   Property.objects.get(id=property_id).property_features.add(property_feature_id)
   return redirect('property_detail', property_id=property_id)
 
+
 @login_required
 def dissociate_property_feature(request, property_id, property_feature_id):
   Property.objects.get(id=property_id).property_features.remove(property_feature_id)
   return redirect('property_detail', property_id=property_id)
+
 
 @login_required
 def add_photo(request, property_id):
@@ -128,6 +131,7 @@ def add_photo(request, property_id):
           print('An error occurred uploading file to S3')
   return redirect('property_detail', property_id=property_id)
 
+
 @login_required
 def delete_photo_page(request, property_id):
   property = Property.objects.get(id=property_id)
@@ -135,10 +139,12 @@ def delete_photo_page(request, property_id):
     'property': property,
   })
 
+
 @login_required
 def delete_photo(request, property_id, photo_id):
   Property.objects.get(id = property_id).photo_set.filter(id = photo_id).delete()
   return redirect('delete_photo_page', property_id = property_id)
+
 
 @login_required
 def add_profile_photo(request, user_id):
@@ -162,7 +168,6 @@ def add_profile_photo(request, user_id):
             print('An error occurred uploading file to S3')
     return redirect('profile_view', pk=user_id)
 
-# Add Availability
 
 @login_required
 def add_availability(request, property_id):
@@ -173,10 +178,12 @@ def add_availability(request, property_id):
     new_availbility.save()
   return redirect('property_detail', property_id = property_id)
 
+
 @login_required
 def delete_availability(request, property_id, availability_id):
   Property.objects.get(id = property_id).availability_set.filter(id = availability_id).delete()
   return redirect('property_detail', property_id = property_id)
+
 
 class AvailabiblityUpdate(LoginRequiredMixin, UpdateView):
   model = Availability
@@ -184,7 +191,6 @@ class AvailabiblityUpdate(LoginRequiredMixin, UpdateView):
   template_name = 'property/availability_form.html'
 
 
-# Add Property Review
 @login_required
 def review_property(request, property_id):
     form = PropertyReviewForm(request.POST)
@@ -200,7 +206,7 @@ class HostProfileView(LoginRequiredMixin, DetailView):
   model = Property
   template_name = 'property/host_profile.html'
 
-# Like
+
 @login_required
 def add_like(request, property_id):
     property = Property.objects.get(id = property_id)
@@ -210,6 +216,7 @@ def add_like(request, property_id):
       new_like.save()
     return redirect('property_detail', property_id = property_id)
 
+
 @login_required
 def remove_like(request,property_id):
   property = Property.objects.get(id = property_id)
@@ -217,6 +224,7 @@ def remove_like(request,property_id):
   if Like.objects.filter(property = property, user = user).exists():
      Like.objects.filter(property = property, user = user).delete()
   return redirect('property_detail', property_id = property_id)
+
 
 @login_required
 def make_reservation(request, property_id, availability_id):
@@ -228,11 +236,13 @@ def make_reservation(request, property_id, availability_id):
     new_reservation.save()
   return redirect('property_detail', property_id = property_id)
 
+
 @login_required
 def cancel_reservation(request, property_id, availability_id):
   if Reservation.objects.filter(availability = availability_id).exists():
      Reservation.objects.filter(availability = availability_id).delete()
   return redirect('property_detail', property_id = property_id)
+
 
 @login_required
 def reservation_list(request, user_id):
