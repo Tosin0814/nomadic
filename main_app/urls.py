@@ -2,9 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    ## View Function removed
-    # path('', views.index, name='index'),
-    # path('accounts/', views.choose_signup, name='choose_signup'),
     path('accounts/signup/', views.signup, name='signup'),
 
     # Added paths

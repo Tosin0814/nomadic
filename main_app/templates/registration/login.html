@@ -1,25 +1,20 @@
 {% extends 'base.html' %}
-
-{% block title %}
-<h3>Login</h3>
-{% endblock %}
+{% load static %}
 
 {% block content %}
-<div class="main-content">
-    <div class="p-5 border-light container justify-content-center">
-        <div  class=" w-50 card row justify-content-center mx-auto">
-            <div class="col bg-light">
-                <h3 class="text-center mt-2">Log In</h3>
-                <br>
-                <div  class="p-3 text-center">
-                    <form method="post" action="{% url 'login' %}" class="p-3 m-3">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <input type="submit" class="btn btn-primary" value="login">
-                        <input type="hidden" name="next" value="{{ next }}">
-                    </form>
-                </div>
-            </div>
+<div class="registration">
+    <div>
+        <img src="{% static 'images/registration.jpeg' %}">
+    </div>
+    <div class="card m-3 p-3 border-light">
+        <h3 class="text-center mb-5">Login</h3>
+        <div class="text-center p-4">
+            <form method="post" action="{% url 'login' %}" class="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="btn btn-primary" value="login">
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
         </div>
     </div>
 </div>

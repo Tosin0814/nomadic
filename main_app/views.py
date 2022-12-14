@@ -12,7 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
 
 S3_BASE_URL = 'https://s3-ca-central-1.amazonaws.com/'
-BUCKET = 'nomadic-project'
+BUCKET = 'nomadic-leozhao'
 
 # def choose_signup(request):
 #   return render(request, 'registration/choose_signup.html')
